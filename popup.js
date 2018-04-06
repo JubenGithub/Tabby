@@ -2,12 +2,33 @@ let sortname = document.getElementById('name');
 let sortfrequency = document.getElementById('frequency');
 let onoffswitch = document.getElementById('onoff');
 let background = chrome.extension.getBackgroundPage();
+let search = document.getElementById('searchbutton');
+
+search.onclick = function(element){
+	let searchvalue = document.getElementById('searchvalue').value;
+	var searched = -1;
+	if(searchvalue){
+	chrome.tabs.query({currentWindow: true}, function (tabs){
+		for (i in tabs){
+			if(tabs[i].title.toLowerCase().includes(searchvalue.toLowerCase()) || tabs[i].url.toLowerCase().includes(searchvalue.toLowerCase())){
+				chrome.tabs.move(tabs[i].id, {index:-1});
+				searched = tabs[i];
+			}
+		}
+		if(searched != -1){
+			chrome.tabs.update(searched.id, {active: true});
+		}
+		
+	});
+	}
+}
 if(background.onoff == "On"){
 	onoffswitch.checked = true;
 }
 else{
 	onoffswitch.checked = false;
 }
+
 onoffswitch.onclick = function(element){
 	if (onoffswitch.checked == true){
 		chrome.runtime.sendMessage({trigger: "On"});

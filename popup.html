@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <html>
   	<head>
     	<style>
@@ -10,9 +11,11 @@
 		.switch {
 		   position: relative;
 		   display: inline-block;
-		   width: 60px;
+		   width: 80px;
 		   height: 34px;
-		 }
+	       margin-left: 15px;
+		   margin-top: 5px;
+	   		}
 		 .switch input {display:none;}
 		 .slider {
 		   position: absolute;
@@ -46,9 +49,9 @@
 		 }
 
 		 input:checked + .slider:before {
-		   -webkit-transform: translateX(26px);
-		   -ms-transform: translateX(26px);
-		   transform: translateX(26px);
+		   -webkit-transform: translateX(46px);
+		   -ms-transform: translateX(46px);
+		   transform: translateX(46px);
 		 }
 
 		 /* Rounded sliders */
@@ -58,6 +61,42 @@
 
 		 .slider.round:before {
 		   border-radius: 50%;
+		 }
+		 * {
+		   box-sizing: border-box;
+		 }
+
+		 /* Style the search field */
+		 form.example input[type=text] {
+		   padding: 7px;
+		   font-size: 10px;
+		   border: 1px solid grey;
+		   float: left;
+		   width: 80%;
+		   background: #f1f1f1;
+		 }
+
+		 /* Style the submit button */
+		 form.example button {
+		   float: right;
+		   width: 20%;
+		   background: #2196F3;
+		   color: white;
+		   font-size: 6px;
+		   border: 1px solid grey;
+		   border-left: none; /* Prevent double borders */
+		   cursor: pointer;
+		 }
+
+		 form.example button:hover {
+		   background: #0b7dda;
+		 }
+
+		 /* Clear floats */
+		 form.example::after {
+		   content: "";
+		   clear: both;
+		   display: table;
 		 }
     	</style>
   	</head>
@@ -69,14 +108,18 @@
 		<li>
 			<button id='frequency'>LRU</button>
 		</li>
+		<div style = "margin-top:5px; margin-bottom:5px">
 		No Duplicate tab
 		
-		<li>
-			<label class="switch">
+		<label class="switch">
  			   <input type="checkbox" id='onoff'>
  			  <span class="slider round"></span>
 		  </label>
-	  	</li>
+	  </div>
+		<form class="example">
+  		  	<input type="text" placeholder="Search.." id='searchvalue'>
+  			<button type="submit" id='searchbutton'><i class="fa fa-search"></i></button>
+		</form>		
 		<script src="popup.js"></script>
   	</body>
 </html>
