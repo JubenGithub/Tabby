@@ -1,7 +1,6 @@
 let sortname = document.getElementById('name');
 let sortfrequency = document.getElementById('frequency');
 let onoffswitch = document.getElementById('onoff');
-let background = chrome.extension.getBackgroundPage();
 let search = document.getElementById('searchbutton');
 
 search.onclick = function(element){
@@ -22,19 +21,26 @@ search.onclick = function(element){
 	});
 	}
 }
-if(background.onoff == "On"){
-	onoffswitch.checked = true;
-}
-else{
-	onoffswitch.checked = false;
+
+window.onload = function(){
+	chrome.storage.sync.get('AvoidDupli', function(data) {
+		if (data.AvoidDupli === 'On'){
+			onoffswitch.checked = true;
+		}
+		else{
+			onoffswitch.checked = false;
+		}
+		}
+	);
 }
 
 onoffswitch.onclick = function(element){
 	if (onoffswitch.checked == true){
-		chrome.runtime.sendMessage({trigger: "On"});
+        chrome.storage.sync.set({AvoidDupli: 'On'});
+		
 	}
 	else{
-		chrome.runtime.sendMessage({trigger: "Off"});
+        chrome.storage.sync.set({AvoidDupli: 'Off'});
 	}
 }
 sortname.onclick = function(element){
@@ -52,9 +58,11 @@ sortname.onclick = function(element){
 	});
 };
 sortfrequency.onclick = function(element){
-	let farray = background.ctabs;
-	console.log(farray);
-	for(var i in farray){
-		chrome.tabs.move(farray[i], {index:-1});
-	}
+	chrome.storage.sync.get('tabs', function(data){
+		let farray = data.tabs;
+		console.log(farray);
+		for(var i in farray){
+			chrome.tabs.move(farray[i], {index:-1});
+		}
+	});
 };
