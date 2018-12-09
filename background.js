@@ -74,5 +74,13 @@ chrome.tabs.onActivated.addListener(function(activeInfo){
 	});
 
 })
+chrome.windows.onRemoved.addListener(function(windowId){
+	console.log("window "+windowId+"closed");
+	var ctabs = [];
+	chrome.storage.sync.set({tabs:ctabs});
+	chrome.storage.sync.get('tabs', function(data){
+		console.log(data.tabs);
+	})
+});
 
 

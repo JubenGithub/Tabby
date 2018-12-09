@@ -61,8 +61,11 @@ sortfrequency.onclick = function(element){
 	chrome.storage.sync.get('tabs', function(data){
 		let farray = data.tabs;
 		console.log(farray);
-		for(var i in farray){
+		for(var i = 0; i < farray.length; i++){
 			chrome.tabs.move(farray[i], {index:-1});
+			if(chrome.runtime.lastError){
+				farray.splice(i, 1);
+			}
 		}
 	});
 };
